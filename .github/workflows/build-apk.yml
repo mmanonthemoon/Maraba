@@ -13,6 +13,8 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout
@@ -68,18 +70,29 @@ jobs:
       - name: Upload debug APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: maraba-debug
+          name: maraba-debug-${{ github.run_number }}
           path: app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
 
       - name: Upload release APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: maraba-release
+          name: maraba-release-${{ github.run_number }}
           path: app/build/outputs/apk/release/*.apk
           if-no-files-found: error
 
-      - name: Create GitHub Release
+      - name: Create CI Release on main
+        if: github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: Maraba CI Build #${{ github.run_number }}
+          prerelease: true
+          files: |
+            app/build/outputs/apk/debug/*.apk
+            app/build/outputs/apk/release/*.apk
+
+      - name: Create GitHub Release (version tags)
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:

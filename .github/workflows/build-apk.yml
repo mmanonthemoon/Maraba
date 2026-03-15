@@ -18,17 +18,19 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: gradle
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Mark gradlew executable
+        run: git update-index --chmod=+x gradlew
 
       - name: Build debug APK
-        run: ./gradlew assembleDebug --no-daemon
+        run: ./gradlew assembleDebug --stacktrace
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: maraba-debug.apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: maraba-debug
+          path: app/build/outputs/apk/debug/
           if-no-files-found: error

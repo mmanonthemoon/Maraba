@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Maraba</string>
+    <string name="app_description">Android otomasyon uygulaması</string>
+
+    <!-- Accessibility Service -->
+    <string name="accessibility_service_description">Maraba, ekran otomasyonu için erişilebilirlik servisine ihtiyaç duyar. Bu izin dokunma, kaydırma ve metin girişi gibi UI aksiyonlarını gerçekleştirmek için kullanılır.</string>
+    <string name="accessibility_service_summary">Ekran otomasyonu için gerekli</string>
+
+    <!-- Notification Channel -->
+    <string name="notification_channel_service_name">Maraba Servisi</string>
+    <string name="notification_channel_service_description">Maraba arka plan servisi bildirimleri</string>
+    <string name="notification_channel_macro_name">Makro Bildirimleri</string>
+    <string name="notification_channel_macro_description">Makro çalışma bildirimleri</string>
+
+    <!-- Service Notification -->
+    <string name="service_notification_title">Maraba çalışıyor</string>
+    <string name="service_notification_text">%1$d aktif makro izleniyor</string>
+    <string name="service_notification_pause">Durdur</string>
+    <string name="service_notification_resume">Devam Et</string>
+
+    <!-- Home Screen -->
+    <string name="home_title">Makrolarım</string>
+    <string name="home_empty_title">Henüz makro yok</string>
+    <string name="home_empty_description">İlk otomasyon kuralınızı oluşturmak için + butonuna dokunun</string>
+    <string name="home_add_macro">Yeni Makro</string>
+    <string name="home_macro_enabled">Aktif</string>
+    <string name="home_macro_disabled">Pasif</string>
+    <string name="home_last_run">Son çalışma: %1$s</string>
+    <string name="home_never_run">Henüz çalışmadı</string>
+
+    <!-- Macro Editor -->
+    <string name="editor_title_new">Yeni Makro</string>
+    <string name="editor_title_edit">Makroyu Düzenle</string>
+    <string name="editor_name_hint">Makro adı</string>
+    <string name="editor_description_hint">Açıklama (isteğe bağlı)</string>
+    <string name="editor_triggers_title">Tetikleyiciler</string>
+    <string name="editor_conditions_title">Koşullar</string>
+    <string name="editor_actions_title">Aksiyonlar</string>
+    <string name="editor_add_trigger">Tetikleyici Ekle</string>
+    <string name="editor_add_condition">Koşul Ekle</string>
+    <string name="editor_add_action">Aksiyon Ekle</string>
+    <string name="editor_save">Kaydet</string>
+    <string name="editor_discard">İptal</string>
+
+    <!-- Trigger Picker -->
+    <string name="trigger_picker_title">Tetikleyici Seç</string>
+    <string name="trigger_category_time">Zaman</string>
+    <string name="trigger_category_app">Uygulama</string>
+    <string name="trigger_category_notification">Bildirim</string>
+    <string name="trigger_category_location">Konum</string>
+    <string name="trigger_category_system">Sistem</string>
+    <string name="trigger_category_sensor">Sensör</string>
+    <string name="trigger_category_communication">İletişim</string>
+    <string name="trigger_category_variable">Değişken</string>
+
+    <!-- Action Picker -->
+    <string name="action_picker_title">Aksiyon Seç</string>
+    <string name="action_category_ui">Ekran Kontrolü</string>
+    <string name="action_category_app">Uygulama</string>
+    <string name="action_category_system">Sistem</string>
+    <string name="action_category_notification">Bildirim</string>
+    <string name="action_category_communication">İletişim</string>
+    <string name="action_category_data">Veri</string>
+    <string name="action_category_media">Medya</string>
+    <string name="action_category_flow">Akış Kontrol</string>
+    <string name="action_category_root">Root (Gelişmiş)</string>
+
+    <!-- Condition Picker -->
+    <string name="condition_picker_title">Koşul Seç</string>
+
+    <!-- Log Screen -->
+    <string name="log_title">Çalışma Geçmişi</string>
+    <string name="log_empty_title">Henüz kayıt yok</string>
+    <string name="log_empty_description">Makrolarınız çalıştığında burada görünecek</string>
+    <string name="log_status_success">Başarılı</string>
+    <string name="log_status_failed">Başarısız</string>
+    <string name="log_status_partial">Kısmen Başarılı</string>
+    <string name="log_status_skipped">Koşul Sağlanmadı</string>
+    <string name="log_clear">Geçmişi Temizle</string>
+
+    <!-- Variables Screen -->
+    <string name="variables_title">Değişkenler</string>
+    <string name="variables_builtin_section">Sistem Değişkenleri</string>
+    <string name="variables_user_section">Kullanıcı Değişkenleri</string>
+    <string name="variables_add">Değişken Ekle</string>
+    <string name="variables_empty">Henüz kullanıcı değişkeni yok</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">Ayarlar</string>
+    <string name="settings_service_section">Servis</string>
+    <string name="settings_service_start">Servisi Başlat</string>
+    <string name="settings_service_stop">Servisi Durdur</string>
+    <string name="settings_battery_optimization">Pil Optimizasyonu</string>
+    <string name="settings_battery_optimization_description">Maraba\'nın arka planda düzgün çalışması için pil optimizasyonunu devre dışı bırakın</string>
+    <string name="settings_permissions_section">İzinler</string>
+    <string name="settings_accessibility">Erişilebilirlik Servisi</string>
+    <string name="settings_notification_access">Bildirim Erişimi</string>
+
+    <!-- Permissions Screen -->
+    <string name="permissions_title">İzinler</string>
+    <string name="permissions_granted">İzin Verildi</string>
+    <string name="permissions_denied">İzin Gerekli</string>
+    <string name="permissions_open_settings">Ayarları Aç</string>
+    <string name="permissions_accessibility_title">Erişilebilirlik Servisi</string>
+    <string name="permissions_accessibility_description">Ekran otomasyonu (dokunma, kaydırma, metin girişi) için gereklidir</string>
+    <string name="permissions_notification_title">Bildirim Erişimi</string>
+    <string name="permissions_notification_description">Bildirim trigger\'ları ve aksiyon için gereklidir</string>
+    <string name="permissions_location_title">Konum</string>
+    <string name="permissions_location_description">Konum tabanlı trigger\'lar için gereklidir</string>
+
+    <!-- Errors -->
+    <string name="error_generic">Bir hata oluştu</string>
+    <string name="error_accessibility_required">Bu aksiyon için Erişilebilirlik Servisi gerekli</string>
+    <string name="error_permission_required">Bu özellik için gerekli izin yok</string>
+    <string name="error_root_required">Bu özellik için root gerekli</string>
+    <string name="error_network">Ağ hatası</string>
+    <string name="error_timeout">Zaman aşımı</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Ana Sayfa</string>
+    <string name="nav_log">Geçmiş</string>
+    <string name="nav_variables">Değişkenler</string>
+    <string name="nav_settings">Ayarlar</string>
+</resources>

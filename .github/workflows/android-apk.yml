@@ -20,6 +20,19 @@ jobs:
           distribution: temurin
           java-version: '17'
 
+      - name: Force write gradle.properties
+        run: |
+          cat > gradle.properties << 'EOF'
+          android.useAndroidX=true
+          android.enableJetifier=true
+          android.suppressUnsupportedCompileSdk=35
+          org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8
+          org.gradle.parallel=true
+          kotlin.code.style=official
+          EOF
+          echo "--- gradle.properties content ---"
+          cat gradle.properties
+
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
@@ -38,6 +51,4 @@ jobs:
         with:
           tag_name: build-${{ github.run_number }}
           name: "Maraba Build #${{ github.run_number }}"
-          files: app/build/outputs/apk/debug/*.apk
-          draft: false
-          prerelease: true
+          files: app/build/outputs/apk/d

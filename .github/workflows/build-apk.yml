@@ -1,9 +1,14 @@
-name: Build Debug APK
+name: Build & Release APK
 
 on:
   push:
     branches: [main]
+    tags:
+      - 'v*'
   workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build:
@@ -18,17 +23,67 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: gradle
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Mark gradlew executable
+        run: git update-index --chmod=+x gradlew
+
+      - name: Install ImageMagick
+        run: sudo apt-get install -y imagemagick
+
+      - name: Generate placeholder launcher icons (all densities)
+        run: |
+          declare -A sizes=(
+            [mipmap-mdpi]=48
+            [mipmap-hdpi]=72
+            [mipmap-xhdpi]=96
+            [mipmap-xxhdpi]=144
+            [mipmap-xxxhdpi]=192
+          )
+          RES_DIR=app/src/main/res
+          for density in "${!sizes[@]}"; do
+            size=${sizes[$density]}
+            dir="$RES_DIR/$density"
+            mkdir -p "$dir"
+            # Only generate if the PNG is missing (committed PNGs take priority)
+            if [ ! -f "$dir/ic_launcher.png" ]; then
+              convert -size "${size}x${size}" xc:'#3D5AFF' "$dir/ic_launcher.png"
+            fi
+            if [ ! -f "$dir/ic_launcher_round.png" ]; then
+              convert -size "${size}x${size}" xc:'#3D5AFF' \
+                -draw "circle $((size/2)),$((size/2)) $((size/2)),0" \
+                "$dir/ic_launcher_round.png"
+            fi
+          done
+          echo "Icon check complete."
 
       - name: Build debug APK
-        run: ./gradlew assembleDebug --no-daemon
+        run: ./gradlew assembleDebug --stacktrace
 
-      - name: Upload APK artifact
+      - name: Build release APK
+        run: ./gradlew assembleRelease --stacktrace
+
+      - name: Upload debug APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: maraba-debug.apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: maraba-debug
+          path: app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
+
+      - name: Upload release APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: maraba-release
+          path: app/build/outputs/apk/release/*.apk
+          if-no-files-found: error
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            app/build/outputs/apk/debug/*.apk
+            app/build/outputs/apk/release/*.apk
+          generate_release_notes: true

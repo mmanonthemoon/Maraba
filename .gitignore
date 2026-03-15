@@ -1,0 +1,25 @@
+# Built artifacts
+*.apk
+*.aab
+*.aar
+*.ap_
+*.dex
+
+# Build outputs
+/build/
+app/build/
+**/build/
+
+# Local configuration
+local.properties
+*.keystore
+*.jks
+
+# IDE files
+.idea/
+*.iml
+.DS_Store
+
+# Gradle caches (NOT the wrapper JAR — keep gradle/wrapper/gradle-wrapper.jar)
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar

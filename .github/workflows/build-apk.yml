@@ -2,7 +2,9 @@ name: Build & Release APK
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - 'claude/**'
     tags:
       - 'v*'
   workflow_dispatch:
@@ -29,8 +31,8 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
-      - name: Mark gradlew executable
-        run: git update-index --chmod=+x gradlew
+      - name: Make gradlew executable
+        run: chmod +x gradlew
 
       - name: Install ImageMagick
         run: sudo apt-get install -y imagemagick
@@ -49,12 +51,11 @@ jobs:
             size=${sizes[$density]}
             dir="$RES_DIR/$density"
             mkdir -p "$dir"
-            # Only generate if the PNG is missing (committed PNGs take priority)
             if [ ! -f "$dir/ic_launcher.png" ]; then
-              convert -size "${size}x${size}" xc:'#3D5AFF' "$dir/ic_launcher.png"
+              convert -size "${size}x${size}" xc:'#006B5B' "$dir/ic_launcher.png"
             fi
             if [ ! -f "$dir/ic_launcher_round.png" ]; then
-              convert -size "${size}x${size}" xc:'#3D5AFF' \
+              convert -size "${size}x${size}" xc:'#006B5B' \
                 -draw "circle $((size/2)),$((size/2)) $((size/2)),0" \
                 "$dir/ic_launcher_round.png"
             fi
@@ -81,22 +82,14 @@ jobs:
           path: app/build/outputs/apk/release/*.apk
           if-no-files-found: error
 
-      - name: Create CI Release on main
-        if: github.ref == 'refs/heads/main'
+      - name: Create GitHub Release
+        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/claude/') || startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
           tag_name: build-${{ github.run_number }}
-          name: Maraba CI Build #${{ github.run_number }}
-          prerelease: true
+          name: "Maraba Build #${{ github.run_number }}"
+          prerelease: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+          generate_release_notes: ${{ startsWith(github.ref, 'refs/tags/v') }}
           files: |
             app/build/outputs/apk/debug/*.apk
             app/build/outputs/apk/release/*.apk
-
-      - name: Create GitHub Release (version tags)
-        if: startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v2
-        with:
-          files: |
-            app/build/outputs/apk/debug/*.apk
-            app/build/outputs/apk/release/*.apk
-          generate_release_notes: true
